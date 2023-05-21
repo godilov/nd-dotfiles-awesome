@@ -1,0 +1,6 @@
+[submodule "ext/nd/lib"]
+	path = ext/nd/lib
+	url = https://github.com/GermanOdilov/nd-dotfiles-lib.git
+[submodule "ext/nd/res"]
+	path = ext/nd/res
+	url = https://github.com/GermanOdilov/nd-dotfiles-res.git
