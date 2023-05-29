@@ -1,3 +1,10 @@
+local str_lib   = require 'nd.lib.core.str'
+
+local pactl     = require 'nd.awesome.config.media.pactl'
+local light     = require 'nd.awesome.config.media.light'
+
+local concat2s  = str_lib.concat2s
+
 local awesome   = awesome
 local screen    = screen
 local client    = client
@@ -8,6 +15,8 @@ local gears     = require 'gears'
 local wibox     = require 'wibox'
 local naughty   = require 'naughty'
 local menubar   = require 'menubar'
+
+local date      = os.date
 
 return {
     ['main'] = {
@@ -42,6 +51,25 @@ return {
             wibox     = wibox,
             naughty   = naughty,
             menubar   = menubar,
+            media     = {
+                sound = pactl,
+                light = light,
+                bluetooth = {
+                    list = function()
+                    end,
+                },
+                screen = {
+                    print = function()
+                        local path = concat2s('~/Pictures/Screenshots/', date '%Y-%m-%d_%H-%M-%S.png')
+
+                        awful.spawn.with_shell(concat2s('shotgun -s ', path))
+
+                        naughty.notify {
+                            text = concat2s('Screenshot: ', path),
+                        }
+                    end,
+                },
+            },
         },
     },
 }
