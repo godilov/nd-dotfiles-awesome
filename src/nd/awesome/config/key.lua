@@ -22,7 +22,7 @@ return {
     ['main'] = {
         scheme = 'main',
         mod = {
-            keyboard = {
+            key = {
                 alt   = 'Mod1',
                 ctrl  = 'Control',
                 shift = 'Shift',
@@ -30,7 +30,7 @@ return {
                 enter = 'Return',
                 space = 'space',
             },
-            mouse = {
+            button = {
                 left        = 1,
                 right       = 3,
                 roller      = 2,

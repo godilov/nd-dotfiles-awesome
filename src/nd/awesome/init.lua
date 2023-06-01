@@ -1,15 +1,14 @@
 local fn_lib          = require 'nd.lib.core.fn'
 local str_lib         = require 'nd.lib.core.str'
 local type_lib        = require 'nd.lib.core.type'
-local cache_lib       = require 'nd.lib.core.cache.fs'
+
+local cache_lib       = require 'nd.lib.cache.fs'
 
 local key_cache_res   = require 'nd.res.key.cache'
 local color_cache_res = require 'nd.res.color.cache'
 
 local key_config      = require 'nd.awesome.config.key'
 local color_config    = require 'nd.awesome.config.color'
-
-local interface       = require 'nd.awesome.core.interface'
 
 local key_fn          = require 'nd.awesome.core.key'
 
@@ -25,9 +24,6 @@ local is_fn           = type_lib.is_fn
 
 local key_scheme_fn   = key_cache_res.get_awesome
 local color_scheme_fn = color_cache_res.get_awesome
-
-local background      = interface.raw.container.background
-local align           = interface.raw.layout.align
 
 local awesome         = awesome
 local screen          = screen
@@ -84,12 +80,12 @@ set_screen = function(key_scheme)
             { '-', set_tags_properties },
         })
 
-        local wibar      = awful.wibar {
+        local wibar     = awful.wibar {
             screen  = s,
             visible = false,
         }
 
-        local taglist    = awful.wibox.taglist
+        local taglist   = awful.widget.taglist
             {
                 screen          = s,
                 filter          = awful.widget.taglist.filter.all,
@@ -122,7 +118,7 @@ set_screen = function(key_scheme)
                 },
             }
 
-        local tasklist   = awful.wibox.tasklist {
+        local tasklist  = awful.widget.tasklist {
             screen          = s,
             filter          = awful.widget.tasklist.filter.currenttags,
             buttons         = key_scheme.button.tasklist,
@@ -162,17 +158,17 @@ set_screen = function(key_scheme)
             },
         }
 
-        local textclock_ = wibox.widget.textclock(' %d.%m.%Y %T ', 1)
+        local textclock = wibox.widget.textclock(' %d.%m.%Y %T ', 1)
 
         wibar:setup {
-            background {
-                shape = gears.shape.rectangle,
-                bg    = beautiful.bg_normal,
-                align.horizontal {
-                    taglist,
-                    tasklist,
-                    textclock_,
-                },
+            widget = wibox.container.background,
+            shape  = gears.shape.rectangle,
+            bg     = beautiful.bg_normal,
+            {
+                layout = wibox.layout.align.horizontal,
+                taglist,
+                tasklist,
+                textclock,
             },
         }
     end
