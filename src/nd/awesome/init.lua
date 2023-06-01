@@ -171,6 +171,8 @@ set_screen = function(key_scheme)
                 textclock,
             },
         }
+
+        s.wibar = wibar
     end
 end
 

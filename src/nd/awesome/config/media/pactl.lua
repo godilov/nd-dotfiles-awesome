@@ -56,7 +56,7 @@ end
 
 enum_fn = function(fn)
     return function(out, _, _, code)
-        if code ~= 0 then
+        if code == 0 then
             fn(reduce(enum_reduce, {}, filter(enum_filter, map(enum_trim, split_it(out, '\n')))))
         end
     end
@@ -68,7 +68,7 @@ end
 
 get_fn = function(fn)
     return function(out, _, _, code)
-        if code ~= 0 then
+        if code == 0 then
             fn(out)
         end
     end
@@ -80,22 +80,22 @@ end
 
 get_val_fn = function(fn)
     return function(out, _, _, code)
-        if code ~= 0 then
+        if code == 0 then
             fn(tonumber(match(split(out, '/')[2], '[0-9]+')))
         end
     end
 end
 
 get_val = function(id, fn)
-    easy_async(format('pactl get-sink-volume {}', id or '@DEFAULT_SINK@'), get_val_fn(fn))
+    easy_async(format('pactl get-sink-volume %s', id or '@DEFAULT_SINK@'), get_val_fn(fn))
 end
 
 set_val = function(id, val)
-    spawn(format('pactl set-sink-volume {} {}%', id or '@DEFAULT_SINK@', clamp(val, 0, 100)))
+    spawn(format('pactl set-sink-volume %s %s%%', id or '@DEFAULT_SINK@', clamp(val, 0, 100)))
 end
 
 set_dev = function(id)
-    spawn(format('pactl set-default-sink {}', id))
+    spawn(format('pactl set-default-sink %s', id))
 end
 
 add = function(id, val)
@@ -105,7 +105,7 @@ add = function(id, val)
 end
 
 mute = function(id)
-    easy_async(format('pactl set-sink-mute {} toggle', id or '@DEFAULT_SINK@'))
+    easy_async(format('pactl set-sink-mute %s toggle', id or '@DEFAULT_SINK@'))
 end
 
 return {

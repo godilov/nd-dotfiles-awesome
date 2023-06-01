@@ -29,7 +29,7 @@ local add        = nil
 
 enum_fn = function(fn)
     return function(out, _, _, code)
-        if code ~= 0 then
+        if code == 0 then
             fn(collect(it(gmatch(out, '[^%s]+'))))
         end
     end
@@ -41,7 +41,7 @@ end
 
 get_val_fn = function(fn)
     return function(out, _, _, code)
-        if code ~= 0 then
+        if code == 0 then
             fn(tonumber(out))
         end
     end
@@ -52,11 +52,11 @@ get_val = function(fn)
 end
 
 set_val = function(val)
-    spawn(format('light -S {}', clamp(val, 0, 100)))
+    spawn(format('light -S %s', clamp(val, 0, 100)))
 end
 
 add = function(val)
-    spawn(format('light {} {}', val >= 0 and '-A' or '-U', abs(val)))
+    spawn(format('light %s %s', val >= 0 and '-A' or '-U', abs(val)))
 end
 
 return {
