@@ -45,6 +45,8 @@ run = function()
     require 'nd.lib.test' {}
 end
 
+require 'rc-default'
+
 init(require 'gears.filesystem'.get_configuration_dir(), false)
 
 return {
