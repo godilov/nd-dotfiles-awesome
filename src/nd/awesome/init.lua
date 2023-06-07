@@ -70,14 +70,14 @@ set_screen = function(key_scheme)
     return function(s)
         set_wallpapers(s, beautiful.wallpaper)
         set_tags(s, {
-            { '-', set_tags_properties },
-            { '-', set_tags_properties },
-            { '-', set_tags_properties },
-            { '-', set_tags_properties },
-            { '-', set_tags_properties },
-            { '-', set_tags_properties },
-            { '-', set_tags_properties },
-            { '-', set_tags_properties },
+            { 'X', set_tags_properties },
+            { 'X', set_tags_properties },
+            { 'X', set_tags_properties },
+            { 'X', set_tags_properties },
+            { 'X', set_tags_properties },
+            { 'X', set_tags_properties },
+            { 'X', set_tags_properties },
+            { 'X', set_tags_properties },
         })
 
         local wibar     = awful.wibar {
@@ -132,13 +132,14 @@ set_screen = function(key_scheme)
                 widget = wibox.container.background,
                 {
                     widget = wibox.container.margin,
-                    top    = 6,
-                    bottom = 6,
+                    top    = 4,
+                    bottom = 4,
                     left   = 6,
                     right  = 6,
                     {
-                        id     = 'icon_role',
-                        widget = wibox.widget.imagebox,
+                        id           = 'icon_role',
+                        widget       = wibox.widget.imagebox,
+                        forced_width = 28,
                     },
                 },
                 create_callback = function(self, c, _, _)
