@@ -56,7 +56,7 @@ set_val = function(val)
 end
 
 add = function(val)
-    spawn(format('light %s %s', val >= 0 and '-A' or '-U', abs(val)))
+    spawn(format('light %s %s', (val or 0) >= 0 and '-A' or '-U', abs(val)))
 end
 
 return {

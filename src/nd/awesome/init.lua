@@ -1,8 +1,10 @@
 local fn_lib          = require 'nd.lib.core.fn'
 local str_lib         = require 'nd.lib.core.str'
+local tab_lib         = require 'nd.lib.core.tab'
 local type_lib        = require 'nd.lib.core.type'
 
 local cache_lib       = require 'nd.lib.cache.fs'
+local event_lib       = require 'nd.lib.event'
 
 local key_cache_res   = require 'nd.res.key.cache'
 local color_cache_res = require 'nd.res.color.cache'
@@ -18,6 +20,8 @@ local iv              = fn_lib.iv
 local each            = fn_lib.each
 
 local concat2s        = str_lib.concat2s
+
+local clone_with      = tab_lib.clone_with
 
 local is_str          = type_lib.is_str
 local is_fn           = type_lib.is_fn
@@ -186,8 +190,20 @@ return function()
             { 'picom',   '' },
         }
 
-        local key_scheme = key_scheme_fn(key_config['main'])
         local color_scheme = color_scheme_fn(color_config['main'])
+        local key_scheme = key_scheme_fn(clone_with(key_config['main'], {
+            event = {
+                on_sound = function(val)
+                    event_lib.notify('key', 'sound', val)
+                end,
+                on_light = function(val)
+                    event_lib.notify('key', 'light', val)
+                end,
+                on_tag = function()
+                    event_lib.notify('key', 'tag')
+                end,
+            },
+        }))
 
         root.keys(key_fn(key_scheme.key.root, awful.key))
         root.buttons(key_fn(key_scheme.button.root, awful.button))
