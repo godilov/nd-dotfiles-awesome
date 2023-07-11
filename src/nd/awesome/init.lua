@@ -190,20 +190,8 @@ return function()
             { 'picom',   '' },
         }
 
+        local key_scheme = key_scheme_fn(key_config['main'])
         local color_scheme = color_scheme_fn(color_config['main'])
-        local key_scheme = key_scheme_fn(clone_with(key_config['main'], {
-            event = {
-                on_sound = function(val)
-                    event_lib.notify('key', 'sound', val)
-                end,
-                on_light = function(val)
-                    event_lib.notify('key', 'light', val)
-                end,
-                on_tag = function()
-                    event_lib.notify('key', 'tag')
-                end,
-            },
-        }))
 
         root.keys(key_fn(key_scheme.key.root, awful.key))
         root.buttons(key_fn(key_scheme.button.root, awful.button))

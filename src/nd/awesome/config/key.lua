@@ -1,5 +1,7 @@
 local str_lib   = require 'nd.lib.core.str'
 
+local event_lib = require 'nd.lib.event'
+
 local pactl     = require 'nd.awesome.config.media.pactl'
 local light     = require 'nd.awesome.config.media.light'
 
@@ -70,6 +72,17 @@ return {
                     end,
                 },
             },
+        },
+        event = {
+            on_sound = function(val)
+                event_lib.notify('key', 'sound', val)
+            end,
+            on_light = function(val)
+                event_lib.notify('key', 'light', val)
+            end,
+            on_tag = function()
+                event_lib.notify('key', 'tag')
+            end,
         },
     },
 }
